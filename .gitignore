@@ -1,0 +1,13 @@
+node_modules/
+out/
+dist/
+dist-hosted/
+release/
+.npm-cache/
+.electron-cache/
+.tmp/
+data/
+*.log
+.DS_Store
+
+.vercel

@@ -1,0 +1,91 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --canvas: #f4f6fb;
+  --panel: #ffffff;
+  --panel-2: #eef1f7;
+  --line: #dfe4ee;
+  --fg: #0f172a;
+  --muted: #5c6780;
+  --accent: #4f5bff;
+  --accent-strong: #3f4bef;
+  --accent-soft: #4f5bff1a;
+  --ok: #14a06b;
+  --warn: #c07a00;
+  --danger: #d33f4b;
+}
+
+.dark {
+  --canvas: #070b14;
+  --panel: #0c1322;
+  --panel-2: #111a2c;
+  --line: #1c2740;
+  --fg: #e9eef8;
+  --muted: #8794ab;
+  --accent: #5b6cff;
+  --accent-strong: #7482ff;
+  --accent-soft: #5b6cff1f;
+  --ok: #37d08e;
+  --warn: #f0b24a;
+  --danger: #ff6b78;
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-panel: var(--panel);
+  --color-panel-2: var(--panel-2);
+  --color-line: var(--line);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-danger: var(--danger);
+  --font-sans: 'Segoe UI Variable Text', 'Segoe UI', system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--canvas);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  user-select: none;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background-color: var(--accent-soft);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
