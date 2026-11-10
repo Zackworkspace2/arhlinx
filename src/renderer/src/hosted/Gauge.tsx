@@ -11,6 +11,7 @@ const CENTER = SIZE / 2
 const RADIUS = 86
 const START = -120
 const SWEEP = 240
+const TICK_COUNT = 20
 
 function point(angleDeg: number, radius: number): { x: number; y: number } {
   const radians = (angleDeg * Math.PI) / 180
@@ -27,17 +28,32 @@ function arcPath(from: number, to: number, radius: number): string {
   return `M ${start.x} ${start.y} A ${radius} ${radius} 0 ${largeArc} 1 ${end.x} ${end.y}`
 }
 
-export function Gauge({ value, max, unit, phase, running }: GaugeProps): React.JSX.Element {
-  const ratio = Math.min(1, Math.max(0, value / max))
-  const eased = Math.sqrt(ratio)
-  const angle = START + SWEEP * eased
-  const percent = Math.max(0, Math.min(100, eased * 100))
+function scaleLabel(value: number): string {
+  if (value >= 1000) return `${(value / 1000).toFixed(value % 1000 === 0 ? 0 : 1)}k`
+  return String(Math.round(value))
+}
 
-  const ticks = Array.from({ length: 21 }, (_, index) => {
-    const tickAngle = START + (SWEEP / 20) * index
-    const outer = point(tickAngle, RADIUS - 12)
-    const inner = point(tickAngle, RADIUS - 18)
-    return { outer, inner, major: index % 5 === 0 }
+export function Gauge({ value, max, unit, phase, running }: GaugeProps): React.JSX.Element {
+  // Linear mapping: the needle is always at value/max of the arc, so position,
+  // numbers and labels agree. No log/sqrt easing.
+  const ratio = Math.min(1, Math.max(0, value / max))
+  const angle = START + SWEEP * ratio
+  const percent = Math.max(0, Math.min(100, ratio * 100))
+
+  const ticks = Array.from({ length: TICK_COUNT + 1 }, (_, index) => {
+    const fraction = index / TICK_COUNT
+    const tickAngle = START + SWEEP * fraction
+    const major = index % (TICK_COUNT / 4) === 0
+    return {
+      outer: point(tickAngle, RADIUS - 12),
+      inner: point(tickAngle, RADIUS - (major ? 20 : 16)),
+      major
+    }
+  })
+
+  const labels = [0, 0.25, 0.5, 0.75, 1].map((fraction) => {
+    const position = point(START + SWEEP * fraction, RADIUS + 16)
+    return { fraction, x: position.x, y: position.y, text: scaleLabel(max * fraction) }
   })
 
   return (
@@ -88,6 +104,21 @@ export function Gauge({ value, max, unit, phase, running }: GaugeProps): React.J
             strokeWidth={tick.major ? 2 : 1}
             strokeLinecap="round"
           />
+        ))}
+
+        {labels.map((label) => (
+          <text
+            key={label.fraction}
+            x={label.x}
+            y={label.y}
+            textAnchor="middle"
+            dominantBaseline="middle"
+            fontSize={8}
+            fontWeight={600}
+            fill="var(--muted)"
+          >
+            {label.text}
+          </text>
         ))}
 
         <g

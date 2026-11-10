@@ -52,7 +52,7 @@ export function SpeedPanel({ history, onResult, onClear }: SpeedPanelProps): Rea
       const result = await runSpeedTestLive((next) => {
         setUpdate(next)
         const candidate = next.phase === 'upload' ? (next.uploadMbps ?? next.mbps) : next.mbps
-        if (candidate > max * 0.92) {
+        if (candidate > max) {
           const bigger = MAX_STEPS.find((step) => step > candidate)
           if (bigger) setMax(bigger)
         }
