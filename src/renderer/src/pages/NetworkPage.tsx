@@ -10,7 +10,7 @@ interface NetworkPageProps {
 function Field({ label, value }: { label: string; value: string }): React.JSX.Element {
   return (
     <div className="min-w-0">
-      <p className="text-[11px] uppercase tracking-[0.12em] text-muted">{label}</p>
+      <p className="text-[11px] font-mono uppercase tracking-[0.12em] text-muted">{label}</p>
       <p className="mt-0.5 truncate text-sm text-fg" title={value}>
         {value}
       </p>
@@ -157,7 +157,7 @@ export function NetworkPage({ focus }: NetworkPageProps): React.JSX.Element {
 
             {adapter.dns.length > 0 && (
               <div className="mt-4 border-t border-line pt-3">
-                <p className="text-[11px] uppercase tracking-[0.12em] text-muted">DNS servers</p>
+                <p className="text-[11px] font-mono uppercase tracking-[0.12em] text-muted">DNS servers</p>
                 <div className="mt-1 flex flex-wrap gap-2">
                   {adapter.dns.map((server) => (
                     <span key={server} className="rounded-full border border-line px-2 py-0.5 text-[11px] text-fg">

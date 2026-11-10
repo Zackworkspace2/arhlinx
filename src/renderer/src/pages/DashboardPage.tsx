@@ -32,7 +32,7 @@ function Stat({
     <div className="rounded-xl border border-line bg-panel p-4">
       <div className="flex items-center gap-2 text-muted">
         {icon}
-        <span className="text-[11px] font-medium uppercase tracking-[0.12em]">{label}</span>
+        <span className="text-[11px] font-medium font-mono uppercase tracking-[0.12em]">{label}</span>
       </div>
       <p className="mt-2 truncate text-lg font-semibold text-fg">{value}</p>
       <p className="mt-0.5 truncate text-[11px] text-muted">{hint}</p>
@@ -167,19 +167,19 @@ export function DashboardPage({ info, onNavigate }: DashboardPageProps): React.J
         {speed ? (
           <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
             <div>
-              <p className="text-[10px] uppercase tracking-[0.12em] text-muted">Download</p>
+              <p className="text-[10px] font-mono uppercase tracking-[0.12em] text-muted">Download</p>
               <p className="mt-0.5 text-sm font-medium">{speed.downloadMbps.toFixed(2)} Mbps</p>
             </div>
             <div>
-              <p className="text-[10px] uppercase tracking-[0.12em] text-muted">Upload</p>
+              <p className="text-[10px] font-mono uppercase tracking-[0.12em] text-muted">Upload</p>
               <p className="mt-0.5 text-sm font-medium">{speed.uploadMbps.toFixed(2)} Mbps</p>
             </div>
             <div>
-              <p className="text-[10px] uppercase tracking-[0.12em] text-muted">Ping</p>
+              <p className="text-[10px] font-mono uppercase tracking-[0.12em] text-muted">Ping</p>
               <p className="mt-0.5 text-sm font-medium">{speed.pingMs.toFixed(1)} ms</p>
             </div>
             <div>
-              <p className="text-[10px] uppercase tracking-[0.12em] text-muted">Jitter</p>
+              <p className="text-[10px] font-mono uppercase tracking-[0.12em] text-muted">Jitter</p>
               <p className="mt-0.5 text-sm font-medium">{speed.jitterMs.toFixed(1)} ms</p>
             </div>
           </div>

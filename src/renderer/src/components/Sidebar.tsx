@@ -92,7 +92,7 @@ export function Sidebar({
         {groups.map((group) => (
           <div key={group.title} className="mb-3">
             {!collapsed ? (
-              <p className="px-2 pb-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted/80">
+              <p className="px-2 pb-1 text-[10px] font-semibold font-mono uppercase tracking-[0.14em] text-muted/80">
                 {group.title}
               </p>
             ) : (

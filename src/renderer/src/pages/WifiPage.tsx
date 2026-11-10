@@ -28,7 +28,7 @@ function formatTime(iso: string | null): string {
 function Stat({ label, value }: { label: string; value: string }): React.JSX.Element {
   return (
     <div>
-      <p className="text-[11px] uppercase tracking-[0.12em] text-muted">{label}</p>
+      <p className="text-[11px] font-mono uppercase tracking-[0.12em] text-muted">{label}</p>
       <p className="mt-0.5 truncate text-sm font-medium text-fg">{value}</p>
     </div>
   )
@@ -180,7 +180,7 @@ export function WifiPage(): React.JSX.Element {
         <div className="rounded-xl border border-line bg-panel p-4">
           <div className="flex items-center gap-2 text-muted">
             <ShieldCheck size={14} />
-            <span className="text-[11px] font-medium uppercase tracking-[0.12em]">Saved networks</span>
+            <span className="text-[11px] font-medium font-mono uppercase tracking-[0.12em]">Saved networks</span>
           </div>
           <p className="mt-2 text-2xl font-semibold">{saved.length}</p>
           <p className="mt-0.5 text-[11px] text-muted">

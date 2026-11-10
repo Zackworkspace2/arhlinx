@@ -69,26 +69,26 @@ export function DevicesPage(): React.JSX.Element {
 
       <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <div className="rounded-xl border border-line bg-panel p-4">
-          <p className="text-[11px] uppercase tracking-[0.12em] text-muted">Subnet</p>
+          <p className="text-[11px] font-mono uppercase tracking-[0.12em] text-muted">Subnet</p>
           <p className="mt-2 text-lg font-semibold">{scan?.subnet ?? '—'}</p>
           <p className="mt-0.5 truncate text-[11px] text-muted">
             {scan?.adapter ? scan.adapter.name : 'no IPv4 adapter'}
           </p>
         </div>
         <div className="rounded-xl border border-line bg-panel p-4">
-          <p className="text-[11px] uppercase tracking-[0.12em] text-muted">Devices seen</p>
+          <p className="text-[11px] font-mono uppercase tracking-[0.12em] text-muted">Devices seen</p>
           <p className="mt-2 text-lg font-semibold">{scan ? devices.length : '—'}</p>
           <p className="mt-0.5 text-[11px] text-muted">
             {scan ? `${scan.hostsInSubnet} addresses probed` : 'scanning'}
           </p>
         </div>
         <div className="rounded-xl border border-line bg-panel p-4">
-          <p className="text-[11px] uppercase tracking-[0.12em] text-muted">Online</p>
+          <p className="text-[11px] font-mono uppercase tracking-[0.12em] text-muted">Online</p>
           <p className="mt-2 text-lg font-semibold text-ok">{scan ? online : '—'}</p>
           <p className="mt-0.5 text-[11px] text-muted">answered ping</p>
         </div>
         <div className="rounded-xl border border-line bg-panel p-4">
-          <p className="text-[11px] uppercase tracking-[0.12em] text-muted">Scan time</p>
+          <p className="text-[11px] font-mono uppercase tracking-[0.12em] text-muted">Scan time</p>
           <p className="mt-2 text-lg font-semibold">
             {scan ? `${(scan.durationMs / 1000).toFixed(1)} s` : '—'}
           </p>
@@ -100,7 +100,7 @@ export function DevicesPage(): React.JSX.Element {
 
       <div className="mt-6 overflow-x-auto rounded-xl border border-line bg-panel">
         <table className="w-full min-w-[640px] text-left text-xs">
-          <thead className="border-b border-line text-[10px] uppercase tracking-[0.12em] text-muted">
+          <thead className="border-b border-line text-[10px] font-mono uppercase tracking-[0.12em] text-muted">
             <tr>
               <th className="px-4 py-2 font-medium">Status</th>
               <th className="px-4 py-2 font-medium">Address</th>

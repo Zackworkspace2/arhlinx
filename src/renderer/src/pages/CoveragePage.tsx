@@ -64,19 +64,19 @@ export function CoveragePage(): React.JSX.Element {
 
       <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <div className="rounded-xl border border-line bg-panel p-4">
-          <p className="text-[11px] uppercase tracking-[0.12em] text-muted">Networks</p>
+          <p className="text-[11px] font-mono uppercase tracking-[0.12em] text-muted">Networks</p>
           <p className="mt-2 text-2xl font-semibold">{data ? data.networkCount : '—'}</p>
           <p className="mt-0.5 text-[11px] text-muted">
             {data ? `${data.apCount} access points` : 'scanning'}
           </p>
         </div>
         <div className="rounded-xl border border-line bg-panel p-4">
-          <p className="text-[11px] uppercase tracking-[0.12em] text-muted">Average signal</p>
+          <p className="text-[11px] font-mono uppercase tracking-[0.12em] text-muted">Average signal</p>
           <p className="mt-2 text-2xl font-semibold">{data?.avgSignal === null || data?.avgSignal === undefined ? '—' : `${data.avgSignal}%`}</p>
           <p className="mt-0.5 text-[11px] text-muted">across visible networks</p>
         </div>
         <div className="rounded-xl border border-line bg-panel p-4">
-          <p className="text-[11px] uppercase tracking-[0.12em] text-muted">Strongest</p>
+          <p className="text-[11px] font-mono uppercase tracking-[0.12em] text-muted">Strongest</p>
           <p className="mt-2 truncate text-sm font-semibold" title={data?.strongest?.ssid ?? ''}>
             {data?.strongest?.ssid ?? '—'}
           </p>
@@ -85,7 +85,7 @@ export function CoveragePage(): React.JSX.Element {
           </p>
         </div>
         <div className="rounded-xl border border-line bg-panel p-4">
-          <p className="text-[11px] uppercase tracking-[0.12em] text-muted">Open networks</p>
+          <p className="text-[11px] font-mono uppercase tracking-[0.12em] text-muted">Open networks</p>
           <p className="mt-2 text-2xl font-semibold">{data ? data.openCount : '—'}</p>
           <p className="mt-0.5 text-[11px] text-muted">avoid for sensitive traffic</p>
         </div>

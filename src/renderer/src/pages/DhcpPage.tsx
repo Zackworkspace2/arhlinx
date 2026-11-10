@@ -93,19 +93,19 @@ export function DhcpPage(): React.JSX.Element {
 
             <div className="mt-4 grid grid-cols-2 gap-3 text-xs">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.12em] text-muted">Address</p>
+                <p className="text-[10px] font-mono uppercase tracking-[0.12em] text-muted">Address</p>
                 <p className="mt-0.5">{adapter.ipv4[0] ?? '—'}</p>
               </div>
               <div>
-                <p className="text-[10px] uppercase tracking-[0.12em] text-muted">DHCP server</p>
+                <p className="text-[10px] font-mono uppercase tracking-[0.12em] text-muted">DHCP server</p>
                 <p className="mt-0.5">{adapter.dhcpServer ?? '—'}</p>
               </div>
               <div>
-                <p className="text-[10px] uppercase tracking-[0.12em] text-muted">Lease obtained</p>
+                <p className="text-[10px] font-mono uppercase tracking-[0.12em] text-muted">Lease obtained</p>
                 <p className="mt-0.5">{adapter.leaseObtained ?? '—'}</p>
               </div>
               <div>
-                <p className="text-[10px] uppercase tracking-[0.12em] text-muted">Lease expires</p>
+                <p className="text-[10px] font-mono uppercase tracking-[0.12em] text-muted">Lease expires</p>
                 <p className="mt-0.5">{adapter.leaseExpires ?? '—'}</p>
               </div>
             </div>

@@ -62,7 +62,7 @@ export function Gauge({ value, max, unit, phase, running }: GaugeProps): React.J
         <defs>
           <linearGradient id="gauge-fill" x1="0%" y1="100%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="var(--accent)" />
-            <stop offset="100%" stopColor="#22d3ee" />
+            <stop offset="100%" stopColor="#e8c06a" />
           </linearGradient>
           <filter id="gauge-glow" x="-30%" y="-30%" width="160%" height="160%">
             <feGaussianBlur stdDeviation="4" result="blur" />
@@ -143,11 +143,11 @@ export function Gauge({ value, max, unit, phase, running }: GaugeProps): React.J
       </svg>
 
       <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center pt-8">
-        <p className="text-[10px] uppercase tracking-[0.2em] text-muted">{phase}</p>
+        <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-muted">{phase}</p>
         <p className="mt-1 text-4xl font-semibold tabular-nums leading-none">
           {value > 0 ? value.toFixed(value >= 100 ? 0 : 1) : '—'}
         </p>
-        <p className="mt-1 text-[11px] uppercase tracking-[0.16em] text-muted">{unit}</p>
+        <p className="mt-1 text-[11px] font-mono uppercase tracking-[0.16em] text-muted">{unit}</p>
         {running && (
           <span className="mt-2 size-1.5 animate-pulse rounded-full bg-accent" aria-hidden="true" />
         )}

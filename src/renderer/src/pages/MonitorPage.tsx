@@ -113,7 +113,7 @@ export function MonitorPage(): React.JSX.Element {
         <div className="rounded-xl border border-line bg-panel p-4">
           <div className="flex items-center gap-2 text-muted">
             <ArrowDown size={14} />
-            <span className="text-[11px] uppercase tracking-[0.12em]">Down now</span>
+            <span className="text-[11px] font-mono uppercase tracking-[0.12em]">Down now</span>
           </div>
           <p className="mt-2 text-2xl font-semibold text-ok">
             {traffic ? `${formatBytes(traffic.rateRx)}/s` : '—'}
@@ -122,7 +122,7 @@ export function MonitorPage(): React.JSX.Element {
         <div className="rounded-xl border border-line bg-panel p-4">
           <div className="flex items-center gap-2 text-muted">
             <ArrowUp size={14} />
-            <span className="text-[11px] uppercase tracking-[0.12em]">Up now</span>
+            <span className="text-[11px] font-mono uppercase tracking-[0.12em]">Up now</span>
           </div>
           <p className="mt-2 text-2xl font-semibold text-accent-strong">
             {traffic ? `${formatBytes(traffic.rateTx)}/s` : '—'}
@@ -131,7 +131,7 @@ export function MonitorPage(): React.JSX.Element {
         <div className="rounded-xl border border-line bg-panel p-4">
           <div className="flex items-center gap-2 text-muted">
             <Activity size={14} />
-            <span className="text-[11px] uppercase tracking-[0.12em]">Connections</span>
+            <span className="text-[11px] font-mono uppercase tracking-[0.12em]">Connections</span>
           </div>
           <p className="mt-2 text-2xl font-semibold">{connections ? connections.total : '—'}</p>
           <p className="mt-0.5 text-[11px] text-muted">
@@ -141,7 +141,7 @@ export function MonitorPage(): React.JSX.Element {
         <div className="rounded-xl border border-line bg-panel p-4">
           <div className="flex items-center gap-2 text-muted">
             <Activity size={14} />
-            <span className="text-[11px] uppercase tracking-[0.12em]">Today</span>
+            <span className="text-[11px] font-mono uppercase tracking-[0.12em]">Today</span>
           </div>
           <p className="mt-2 text-2xl font-semibold">
             {traffic ? formatBytes(traffic.today.rx + traffic.today.tx) : '—'}
@@ -185,21 +185,21 @@ export function MonitorPage(): React.JSX.Element {
           {ping && (
             <div className="mt-3 grid grid-cols-2 gap-2 border-t border-line pt-3 text-xs">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.12em] text-muted">Avg</p>
+                <p className="text-[10px] font-mono uppercase tracking-[0.12em] text-muted">Avg</p>
                 <p className="mt-0.5">{ping.avgMs === null ? '—' : `${ping.avgMs} ms`}</p>
               </div>
               <div>
-                <p className="text-[10px] uppercase tracking-[0.12em] text-muted">Loss</p>
+                <p className="text-[10px] font-mono uppercase tracking-[0.12em] text-muted">Loss</p>
                 <p className={`mt-0.5 ${ping.lossPercent > 0 ? 'text-warn' : 'text-ok'}`}>
                   {ping.lossPercent}%
                 </p>
               </div>
               <div>
-                <p className="text-[10px] uppercase tracking-[0.12em] text-muted">Min</p>
+                <p className="text-[10px] font-mono uppercase tracking-[0.12em] text-muted">Min</p>
                 <p className="mt-0.5">{ping.minMs === null ? '—' : `${ping.minMs} ms`}</p>
               </div>
               <div>
-                <p className="text-[10px] uppercase tracking-[0.12em] text-muted">Max</p>
+                <p className="text-[10px] font-mono uppercase tracking-[0.12em] text-muted">Max</p>
                 <p className="mt-0.5">{ping.maxMs === null ? '—' : `${ping.maxMs} ms`}</p>
               </div>
               <p className="col-span-2 text-[10px] text-muted">
@@ -232,7 +232,7 @@ export function MonitorPage(): React.JSX.Element {
 
           <div className="mt-3 max-h-64 overflow-auto rounded-lg border border-line">
             <table className="w-full text-left text-[11px]">
-              <thead className="sticky top-0 bg-panel text-[10px] uppercase tracking-[0.12em] text-muted">
+              <thead className="sticky top-0 bg-panel text-[10px] font-mono uppercase tracking-[0.12em] text-muted">
                 <tr>
                   <th className="px-2 py-1.5 font-medium">Proto</th>
                   <th className="px-2 py-1.5 font-medium">Local</th>

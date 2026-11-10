@@ -136,7 +136,7 @@ export function UsagePage(): React.JSX.Element {
         <div className="rounded-xl border border-line bg-panel p-4">
           <div className="flex items-center gap-2 text-muted">
             <Database size={14} />
-            <span className="text-[11px] font-medium uppercase tracking-[0.12em]">Today</span>
+            <span className="text-[11px] font-medium font-mono uppercase tracking-[0.12em]">Today</span>
           </div>
           <p className="mt-2 text-2xl font-semibold tabular-nums">
             {summary ? formatBytes(today.rx + today.tx) : '—'}
@@ -149,7 +149,7 @@ export function UsagePage(): React.JSX.Element {
         <div className="rounded-xl border border-line bg-panel p-4">
           <div className="flex items-center gap-2 text-muted">
             <HardDrive size={14} />
-            <span className="text-[11px] font-medium uppercase tracking-[0.12em]">This month</span>
+            <span className="text-[11px] font-medium font-mono uppercase tracking-[0.12em]">This month</span>
           </div>
           <p className="mt-2 text-2xl font-semibold tabular-nums">
             {summary ? formatBytes(monthBytes) : '—'}
@@ -162,7 +162,7 @@ export function UsagePage(): React.JSX.Element {
         <div className="rounded-xl border border-line bg-panel p-4">
           <div className="flex items-center gap-2 text-muted">
             <ArrowDown size={14} />
-            <span className="text-[11px] font-medium uppercase tracking-[0.12em]">Live down</span>
+            <span className="text-[11px] font-medium font-mono uppercase tracking-[0.12em]">Live down</span>
           </div>
           <p className="mt-2 text-2xl font-semibold tabular-nums text-ok">
             {summary ? formatRate(summary.rateRx) : '—'}
@@ -172,7 +172,7 @@ export function UsagePage(): React.JSX.Element {
         <div className="rounded-xl border border-line bg-panel p-4">
           <div className="flex items-center gap-2 text-muted">
             <ArrowUp size={14} />
-            <span className="text-[11px] font-medium uppercase tracking-[0.12em]">Live up</span>
+            <span className="text-[11px] font-medium font-mono uppercase tracking-[0.12em]">Live up</span>
           </div>
           <p className="mt-2 text-2xl font-semibold tabular-nums text-accent-strong">
             {summary ? formatRate(summary.rateTx) : '—'}

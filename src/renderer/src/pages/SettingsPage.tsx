@@ -172,21 +172,21 @@ export function SettingsPage({ theme, onToggleTheme }: SettingsPageProps): React
         </div>
         <div className="mt-3 grid grid-cols-2 gap-3 text-xs sm:grid-cols-4">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.12em] text-muted">App</p>
+            <p className="text-[10px] font-mono uppercase tracking-[0.12em] text-muted">App</p>
             <p className="mt-0.5">{APP_VERSION}</p>
           </div>
           <div>
-            <p className="text-[10px] uppercase tracking-[0.12em] text-muted">Local API</p>
+            <p className="text-[10px] font-mono uppercase tracking-[0.12em] text-muted">Local API</p>
             <p className={`mt-0.5 ${health?.ok ? 'text-ok' : 'text-danger'}`}>
               {health?.ok ? 'connected' : 'unreachable'}
             </p>
           </div>
           <div>
-            <p className="text-[10px] uppercase tracking-[0.12em] text-muted">Node</p>
+            <p className="text-[10px] font-mono uppercase tracking-[0.12em] text-muted">Node</p>
             <p className="mt-0.5">{health?.version ?? '—'}</p>
           </div>
           <div>
-            <p className="text-[10px] uppercase tracking-[0.12em] text-muted">Host</p>
+            <p className="text-[10px] font-mono uppercase tracking-[0.12em] text-muted">Host</p>
             <p className="mt-0.5 truncate">{overview?.hostname ?? '—'}</p>
           </div>
         </div>

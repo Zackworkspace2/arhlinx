@@ -30,7 +30,7 @@ function ResultCard({
     <div className="rounded-xl border border-line bg-panel p-4">
       <div className="flex items-center gap-2 text-muted">
         {icon}
-        <span className="text-[11px] font-medium uppercase tracking-[0.12em]">{label}</span>
+        <span className="text-[11px] font-medium font-mono uppercase tracking-[0.12em]">{label}</span>
       </div>
       <p className="mt-2 flex items-baseline gap-1">
         <span className={`text-3xl font-semibold tabular-nums ${accent ?? 'text-fg'}`}>{resultValue}</span>
@@ -171,7 +171,7 @@ export function SpeedPage(): React.JSX.Element {
       </div>
 
       <div className="mt-3 flex items-center gap-2 rounded-xl border border-line bg-panel px-4 py-3">
-        <span className="text-[11px] uppercase tracking-[0.12em] text-muted">Progress</span>
+        <span className="text-[11px] font-mono uppercase tracking-[0.12em] text-muted">Progress</span>
         <div className="flex flex-1 items-center gap-2">
           {PHASES.map((item, index) => {
             const active = phase === item.id
@@ -215,7 +215,7 @@ export function SpeedPage(): React.JSX.Element {
         ) : (
           <div className="mt-3 overflow-hidden rounded-xl border border-line bg-panel">
             <table className="w-full text-left text-xs">
-              <thead className="border-b border-line text-[10px] uppercase tracking-[0.12em] text-muted">
+              <thead className="border-b border-line text-[10px] font-mono uppercase tracking-[0.12em] text-muted">
                 <tr>
                   <th className="px-4 py-2 font-medium">When</th>
                   <th className="px-4 py-2 text-right font-medium">Down</th>

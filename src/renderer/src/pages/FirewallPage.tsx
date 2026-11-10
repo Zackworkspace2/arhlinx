@@ -75,7 +75,7 @@ export function FirewallPage(): React.JSX.Element {
           return (
             <div key={profile.profile} className="rounded-xl border border-line bg-panel p-4">
               <div className="flex items-center justify-between">
-                <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-muted">
+                <span className="text-[11px] font-medium font-mono uppercase tracking-[0.12em] text-muted">
                   {profile.profile}
                 </span>
                 {on ? <ShieldCheck size={15} className="text-ok" /> : <ShieldOff size={15} className="text-danger" />}
@@ -91,7 +91,7 @@ export function FirewallPage(): React.JSX.Element {
         })}
 
         <div className="rounded-xl border border-line bg-panel p-4">
-          <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-muted">Rules</span>
+          <span className="text-[11px] font-medium font-mono uppercase tracking-[0.12em] text-muted">Rules</span>
           <p className="mt-2 text-lg font-semibold">
             {data ? data.ruleCount : '—'}
             <span className="ml-1 text-xs font-normal text-muted">total</span>
@@ -130,7 +130,7 @@ export function FirewallPage(): React.JSX.Element {
 
         <div className="mt-3 overflow-x-auto rounded-xl border border-line bg-panel">
           <table className="w-full min-w-[720px] text-left text-xs">
-            <thead className="border-b border-line text-[10px] uppercase tracking-[0.12em] text-muted">
+            <thead className="border-b border-line text-[10px] font-mono uppercase tracking-[0.12em] text-muted">
               <tr>
                 <th className="px-3 py-2 font-medium">Rule</th>
                 <th className="px-3 py-2 font-medium">Dir</th>

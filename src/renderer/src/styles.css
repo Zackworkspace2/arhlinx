@@ -2,34 +2,35 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* CooptaIQ brand system: Ink Navy, Brass, Paper. Three colours, no exceptions. */
 :root {
-  --canvas: #f4f6fb;
+  --canvas: #f6f4ee;
   --panel: #ffffff;
-  --panel-2: #eef1f7;
-  --line: #dfe4ee;
-  --fg: #0f172a;
-  --muted: #5c6780;
-  --accent: #4f5bff;
-  --accent-strong: #3f4bef;
-  --accent-soft: #4f5bff1a;
-  --ok: #14a06b;
-  --warn: #c07a00;
-  --danger: #d33f4b;
+  --panel-2: #eceae3;
+  --line: #e3dfd4;
+  --fg: #12213b;
+  --muted: #6b7280;
+  --accent: #c6972f;
+  --accent-strong: #a87c1f;
+  --accent-soft: #c6972f1f;
+  --ok: #166534;
+  --warn: #8a5a00;
+  --danger: #b91c1c;
 }
 
 .dark {
-  --canvas: #070b14;
-  --panel: #0c1322;
-  --panel-2: #111a2c;
-  --line: #1c2740;
-  --fg: #e9eef8;
-  --muted: #8794ab;
-  --accent: #5b6cff;
-  --accent-strong: #7482ff;
-  --accent-soft: #5b6cff1f;
-  --ok: #37d08e;
-  --warn: #f0b24a;
-  --danger: #ff6b78;
+  --canvas: #0d1a2f;
+  --panel: #12213b;
+  --panel-2: #1a2c4a;
+  --line: #24395c;
+  --fg: #f6f4ee;
+  --muted: #9aa5b8;
+  --accent: #c6972f;
+  --accent-strong: #e8c06a;
+  --accent-soft: #c6972f26;
+  --ok: #4ade80;
+  --warn: #e8c06a;
+  --danger: #f87171;
 }
 
 @theme inline {
@@ -45,7 +46,18 @@
   --color-ok: var(--ok);
   --color-warn: var(--warn);
   --color-danger: var(--danger);
-  --font-sans: 'Segoe UI Variable Text', 'Segoe UI', system-ui, sans-serif;
+
+  --font-sans: 'IBM Plex Sans', 'Segoe UI Variable Text', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', monospace;
+
+  /* Brand geometry: 4px corners, no soft pill shapes. */
+  --radius-xs: 2px;
+  --radius-sm: 3px;
+  --radius-md: 4px;
+  --radius-lg: 4px;
+  --radius-xl: 4px;
+  --radius-2xl: 4px;
+  --radius-3xl: 6px;
 }
 
 :root {
@@ -67,9 +79,22 @@ body {
   background-color: var(--canvas);
   color: var(--fg);
   font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
   user-select: none;
+}
+
+/* Fraunces carries every heading; IBM Plex Mono carries labels and data. */
+h1,
+h2,
+h3 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  margin: 0;
 }
 
 button,

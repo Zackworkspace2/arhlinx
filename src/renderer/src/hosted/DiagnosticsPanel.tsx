@@ -74,25 +74,25 @@ export function DiagnosticsPanel({ onLatency }: DiagnosticsPanelProps): React.JS
 
         <div className="mt-4 grid grid-cols-2 gap-3">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.14em] text-muted">Average</p>
+            <p className="text-[10px] font-mono uppercase tracking-[0.14em] text-muted">Average</p>
             <p className="mt-1 text-xl font-semibold tabular-nums">
               {latency ? `${latency.avgMs} ms` : '—'}
             </p>
           </div>
           <div>
-            <p className="text-[10px] uppercase tracking-[0.14em] text-muted">Jitter</p>
+            <p className="text-[10px] font-mono uppercase tracking-[0.14em] text-muted">Jitter</p>
             <p className="mt-1 text-xl font-semibold tabular-nums">
               {latency ? `${latency.jitterMs} ms` : '—'}
             </p>
           </div>
           <div>
-            <p className="text-[10px] uppercase tracking-[0.14em] text-muted">Min / max</p>
+            <p className="text-[10px] font-mono uppercase tracking-[0.14em] text-muted">Min / max</p>
             <p className="mt-1 text-xs tabular-nums">
               {latency ? `${latency.minMs} / ${latency.maxMs} ms` : '—'}
             </p>
           </div>
           <div>
-            <p className="text-[10px] uppercase tracking-[0.14em] text-muted">Loss</p>
+            <p className="text-[10px] font-mono uppercase tracking-[0.14em] text-muted">Loss</p>
             <p className={`mt-1 text-xs tabular-nums ${latency && latency.lossPercent > 0 ? 'text-warn' : ''}`}>
               {latency ? `${latency.lossPercent}%` : '—'}
             </p>

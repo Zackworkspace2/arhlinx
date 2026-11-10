@@ -85,7 +85,7 @@ export function SpeedPanel({ history, onResult, onClear }: SpeedPanelProps): Rea
                 type="button"
                 onClick={() => void run()}
                 disabled={running}
-                className="flex items-center gap-2 rounded-full bg-accent px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-accent/30 transition-all hover:bg-accent-strong disabled:opacity-60"
+                className="flex items-center gap-2 rounded bg-accent px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-strong disabled:opacity-60"
               >
                 {running ? <RotateCw size={16} className="animate-spin" /> : <RotateCw size={16} />}
                 {running ? 'Testing…' : latest ? 'Test again' : 'Go'}
@@ -97,7 +97,7 @@ export function SpeedPanel({ history, onResult, onClear }: SpeedPanelProps): Rea
             <div className="rounded-xl border border-line p-4">
               <div className="flex items-center gap-2 text-muted">
                 <ArrowDown size={13} />
-                <span className="text-[10px] uppercase tracking-[0.14em]">Download</span>
+                <span className="text-[10px] font-mono uppercase tracking-[0.14em]">Download</span>
               </div>
               <p className="mt-2 text-2xl font-semibold tabular-nums text-ok">
                 {readable(download)} <span className="text-xs font-normal text-muted">Mbps</span>
@@ -106,7 +106,7 @@ export function SpeedPanel({ history, onResult, onClear }: SpeedPanelProps): Rea
             <div className="rounded-xl border border-line p-4">
               <div className="flex items-center gap-2 text-muted">
                 <ArrowUp size={13} />
-                <span className="text-[10px] uppercase tracking-[0.14em]">Upload</span>
+                <span className="text-[10px] font-mono uppercase tracking-[0.14em]">Upload</span>
               </div>
               <p className="mt-2 text-2xl font-semibold tabular-nums text-accent-strong">
                 {readable(upload)} <span className="text-xs font-normal text-muted">Mbps</span>
@@ -115,7 +115,7 @@ export function SpeedPanel({ history, onResult, onClear }: SpeedPanelProps): Rea
             <div className="rounded-xl border border-line p-4">
               <div className="flex items-center gap-2 text-muted">
                 <Timer size={13} />
-                <span className="text-[10px] uppercase tracking-[0.14em]">Ping</span>
+                <span className="text-[10px] font-mono uppercase tracking-[0.14em]">Ping</span>
               </div>
               <p className="mt-2 text-2xl font-semibold tabular-nums">
                 {readable(ping, 0)} <span className="text-xs font-normal text-muted">ms</span>
@@ -124,7 +124,7 @@ export function SpeedPanel({ history, onResult, onClear }: SpeedPanelProps): Rea
             <div className="rounded-xl border border-line p-4">
               <div className="flex items-center gap-2 text-muted">
                 <Waves size={13} />
-                <span className="text-[10px] uppercase tracking-[0.14em]">Jitter</span>
+                <span className="text-[10px] font-mono uppercase tracking-[0.14em]">Jitter</span>
               </div>
               <p className="mt-2 text-2xl font-semibold tabular-nums">
                 {readable(jitter, 1)} <span className="text-xs font-normal text-muted">ms</span>
@@ -165,7 +165,7 @@ export function SpeedPanel({ history, onResult, onClear }: SpeedPanelProps): Rea
                 </span>
                 <div className="h-2 flex-1 rounded-full bg-panel-2">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-accent to-cyan-400"
+                    className="h-full rounded-full bg-gradient-to-r from-accent to-[#e8c06a]"
                     style={{ width: `${Math.round(((item.downloadMbps ?? 0) / historyMax) * 100)}%` }}
                   />
                 </div>

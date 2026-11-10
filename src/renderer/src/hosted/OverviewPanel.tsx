@@ -37,7 +37,7 @@ function Tile({
     <div className="rounded-xl border border-line bg-panel p-4">
       <div className="flex items-center gap-2 text-muted">
         {icon}
-        <span className="text-[11px] font-medium uppercase tracking-[0.14em]">{label}</span>
+        <span className="text-[11px] font-medium font-mono uppercase tracking-[0.14em]">{label}</span>
       </div>
       <p className="mt-2 truncate text-base font-semibold text-fg">{value}</p>
       {hint && <p className="mt-0.5 truncate text-[11px] text-muted">{hint}</p>}
@@ -69,7 +69,7 @@ export function OverviewPanel({
       <section className="overflow-hidden rounded-2xl border border-line bg-panel">
         <div className="flex flex-col gap-6 p-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0">
-            <p className="text-[11px] uppercase tracking-[0.16em] text-accent-strong">Your connection</p>
+            <p className="text-[11px] font-mono uppercase tracking-[0.16em] text-accent-strong">Your connection</p>
             <h2 className="mt-1 truncate text-2xl font-semibold">
               {profile ? `${profile.browser} on ${profile.os}` : 'Reading device…'}
             </h2>
@@ -106,7 +106,7 @@ export function OverviewPanel({
               <div className="grid size-[92px] place-items-center rounded-full bg-panel text-center">
                 <div>
                   <p className="text-2xl font-semibold leading-none">{score.score}</p>
-                  <p className="mt-1 text-[10px] uppercase tracking-[0.14em] text-muted">score</p>
+                  <p className="mt-1 text-[10px] font-mono uppercase tracking-[0.14em] text-muted">score</p>
                 </div>
               </div>
             </div>
@@ -186,19 +186,19 @@ export function OverviewPanel({
 
             <div className="mt-4 grid gap-4 sm:grid-cols-3">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.14em] text-muted">Operator</p>
+                <p className="text-[10px] font-mono uppercase tracking-[0.14em] text-muted">Operator</p>
                 <p className="mt-1 truncate text-sm font-medium">{operator ?? '—'}</p>
                 <p className="text-[10px] text-muted">{whoami?.asn ?? 'ASN unavailable'}</p>
               </div>
               <div>
-                <p className="text-[10px] uppercase tracking-[0.14em] text-muted">Network type</p>
+                <p className="text-[10px] font-mono uppercase tracking-[0.14em] text-muted">Network type</p>
                 <p className="mt-1 text-sm font-medium">
                   {hints?.effectiveType ? hints.effectiveType.toUpperCase() : '—'}
                 </p>
                 <p className="text-[10px] text-muted">reported by the browser</p>
               </div>
               <div>
-                <p className="text-[10px] uppercase tracking-[0.14em] text-muted">Location</p>
+                <p className="text-[10px] font-mono uppercase tracking-[0.14em] text-muted">Location</p>
                 <p className="mt-1 truncate text-sm font-medium">{location || '—'}</p>
                 <p className="text-[10px] text-muted">
                   {whoami?.latitude != null && whoami?.longitude != null
@@ -210,12 +210,12 @@ export function OverviewPanel({
           </div>
 
           <div className="rounded-xl border border-line p-4">
-            <p className="text-[10px] uppercase tracking-[0.14em] text-muted">Estimated signal</p>
+            <p className="text-[10px] font-mono uppercase tracking-[0.14em] text-muted">Estimated signal</p>
             <div className="mt-2 flex items-end gap-1.5" aria-hidden="true">
               {[1, 2, 3, 4, 5].map((level) => (
                 <span
                   key={level}
-                  className={`w-2 rounded-sm ${level <= bars ? 'bg-gradient-to-t from-accent to-cyan-400' : 'bg-line'}`}
+                  className={`w-2 rounded-sm ${level <= bars ? 'bg-gradient-to-t from-accent to-[#e8c06a]' : 'bg-line'}`}
                   style={{ height: `${8 + level * 6}px` }}
                 />
               ))}
