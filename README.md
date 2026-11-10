@@ -1,5 +1,7 @@
 # ArhLinx
 
+<p align="center"><img src="src/renderer/public/logo.png" width="360" alt="ArhLinx logo"></p>
+
 Complete Network Control — Windows network manager, built as a web app.
 
 ## Phase status

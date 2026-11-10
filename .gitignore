@@ -17,5 +17,6 @@ data/
 # internal notes and stale screenshots
 rules.md
 ui-*.png
+/arhlinx.png
 
 .vercel

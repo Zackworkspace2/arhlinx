@@ -14,9 +14,13 @@ export default function HostedApp(): React.JSX.Element {
   return (
     <div className="flex h-full flex-col bg-canvas text-fg">
       <header className="flex h-16 shrink-0 items-center gap-3 border-b border-line bg-canvas/85 px-5 backdrop-blur">
-        <div className="grid size-9 place-items-center rounded-lg bg-gradient-to-br from-accent to-indigo-500 text-sm font-bold text-white shadow-lg shadow-accent/30">
-          A
-        </div>
+        <img
+          src="/icon.png"
+          alt="ArhLinx"
+          width={36}
+          height={36}
+          className="size-9 rounded-lg shadow-lg shadow-accent/20"
+        />
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold leading-tight">ArhLinx</p>
           <p className="truncate text-[11px] leading-tight text-muted">Device check</p>

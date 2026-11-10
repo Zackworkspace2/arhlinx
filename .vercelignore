@@ -8,5 +8,5 @@ data/
 .npm-cache/
 .electron-cache/
 *.log
-*.png
+ui-*.png
 rules.md

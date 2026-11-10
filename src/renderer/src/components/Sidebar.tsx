@@ -33,9 +33,13 @@ export function Sidebar({
       }`}
     >
       <div className={`flex h-16 items-center gap-3 ${collapsed ? 'justify-center px-2' : 'px-4'}`}>
-        <div className="grid size-9 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-accent to-indigo-500 text-sm font-bold text-white shadow-lg shadow-accent/30">
-          A
-        </div>
+        <img
+          src="/icon.png"
+          alt="ArhLinx"
+          width={36}
+          height={36}
+          className="size-9 shrink-0 rounded-lg shadow-lg shadow-accent/20"
+        />
         {!collapsed && (
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold leading-tight">ArhLinx</p>
