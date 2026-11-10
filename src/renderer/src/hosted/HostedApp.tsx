@@ -13,44 +13,36 @@ export default function HostedApp(): React.JSX.Element {
 
   return (
     <div className="flex h-full flex-col bg-canvas text-fg">
-      <header className="sticky top-0 z-20 border-b border-line bg-canvas/85 backdrop-blur">
-        <div className="mx-auto flex h-16 w-full max-w-5xl items-center gap-2.5 px-5">
-          <img src="/icon.png" alt="" width={30} height={30} className="size-[30px]" />
-          <div className="min-w-0">
-            <p className="truncate text-[15px] font-semibold leading-none tracking-[-0.02em]">
-              ArhLinx
-            </p>
-            <p className="mt-1 truncate text-[10px] font-medium uppercase tracking-[0.16em] text-muted">
-              Network diagnostics
-            </p>
-          </div>
-
-          <div className="ml-auto flex items-center gap-2">
-            <span className="hidden rounded-full border border-line px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.14em] text-muted sm:inline">
-              v{APP_VERSION}
-            </span>
-            <button
-              type="button"
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              title={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
-              aria-label="Toggle theme"
-              className="grid size-9 place-items-center rounded-lg border border-line bg-panel text-muted transition-colors hover:border-accent/40 hover:text-fg"
-            >
-              {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
-            </button>
-          </div>
+      <header className="flex h-16 shrink-0 items-center gap-3 border-b border-line bg-canvas/85 px-5 backdrop-blur">
+        <img
+          src="/icon.png"
+          alt="ArhLinx"
+          width={36}
+          height={36}
+          className="size-9 rounded-lg shadow-lg shadow-accent/20"
+        />
+        <div className="min-w-0">
+          <p className="truncate text-sm font-semibold leading-tight">ArhLinx</p>
+          <p className="truncate text-[11px] leading-tight text-muted">Complete Network Control</p>
         </div>
+        <button
+          type="button"
+          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          title={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+          aria-label="Toggle theme"
+          className="ml-auto grid size-9 place-items-center rounded-lg border border-line bg-panel text-muted transition-colors hover:border-accent/40 hover:text-fg"
+        >
+          {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+        </button>
       </header>
 
       <main className="flex-1 overflow-y-auto">
         <Dashboard />
       </main>
 
-      <footer className="border-t border-line">
-        <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-2 px-5 py-4 text-[10px] font-medium uppercase tracking-[0.14em] text-muted">
-          <span>ArhLinx · Complete Network Control</span>
-          <span>Measured in your browser · nothing stored remotely</span>
-        </div>
+      <footer className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-t border-line px-5 py-3 text-[11px] text-muted">
+        <span>ArhLinx v{APP_VERSION}</span>
+        <span>Private by design — readings stay in your browser</span>
       </footer>
     </div>
   )

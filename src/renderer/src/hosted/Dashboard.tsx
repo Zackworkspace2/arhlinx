@@ -1,30 +1,23 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Check, ClipboardCopy } from 'lucide-react'
+import { Check, ClipboardCopy, Gauge, LayoutDashboard, Stethoscope, Timer } from 'lucide-react'
 import type { WhoAmI } from '@shared/types'
 import { apiGet } from '../lib/api'
-import {
-  describeDevice,
-  readConnectionHints,
-  type ClientSpeedResult,
-  type ConnectionHint,
-  type DeviceProfile,
-  type LatencyResult
-} from './device'
+import { describeDevice, readConnectionHints, type ClientSpeedResult, type ConnectionHint, type DeviceProfile, type LatencyResult } from './device'
 import { useHistory } from './history'
 import { OverviewPanel } from './OverviewPanel'
 import { SpeedPanel } from './SpeedPanel'
 import { DiagnosticsPanel } from './DiagnosticsPanel'
 
-type Tab = 'speed' | 'overview' | 'diagnostics'
+type Tab = 'overview' | 'speed' | 'diagnostics'
 
-const TABS: { id: Tab; label: string }[] = [
-  { id: 'speed', label: 'Speed test' },
-  { id: 'overview', label: 'Overview' },
-  { id: 'diagnostics', label: 'Diagnostics' }
+const TABS: { id: Tab; label: string; icon: React.JSX.Element }[] = [
+  { id: 'overview', label: 'Overview', icon: <LayoutDashboard size={14} /> },
+  { id: 'speed', label: 'Speed', icon: <Gauge size={14} /> },
+  { id: 'diagnostics', label: 'Diagnostics', icon: <Stethoscope size={14} /> }
 ]
 
 export function Dashboard(): React.JSX.Element {
-  const [tab, setTab] = useState<Tab>('speed')
+  const [tab, setTab] = useState<Tab>('overview')
   const [profile, setProfile] = useState<DeviceProfile | null>(null)
   const [hints, setHints] = useState<ConnectionHint | null>(null)
   const [whoami, setWhoami] = useState<WhoAmI | null>(null)
@@ -73,49 +66,47 @@ export function Dashboard(): React.JSX.Element {
   }
 
   return (
-    <div className="mx-auto w-full max-w-5xl px-5 pb-12 pt-6">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line">
-        <nav className="flex items-center gap-7">
-          {TABS.map((item) => {
-            const active = tab === item.id
-            return (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => setTab(item.id)}
-                aria-current={active ? 'page' : undefined}
-                className={`relative pb-3 pt-1 text-[11px] font-semibold uppercase tracking-[0.18em] transition-colors ${
-                  active ? 'text-fg' : 'text-muted hover:text-fg'
-                }`}
-              >
-                {item.label}
-                {active && (
-                  <span className="absolute inset-x-0 -bottom-px h-[2px] rounded-full bg-accent" />
-                )}
-              </button>
-            )
-          })}
-        </nav>
-
+    <div className="mx-auto w-full max-w-5xl px-5 py-7">
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h1 className="text-xl font-semibold">Device &amp; connection</h1>
+          <p className="mt-0.5 text-xs text-muted">
+            Live readings for this browser, its network path and its capabilities.
+          </p>
+        </div>
         <button
           type="button"
           onClick={() => void copyReport()}
-          className="mb-2 flex items-center gap-1.5 rounded-lg border border-line bg-panel px-3 py-1.5 text-[11px] font-medium text-fg transition-colors hover:border-accent/40"
+          className="flex items-center gap-2 rounded-lg border border-line bg-panel px-3 py-2 text-xs text-fg transition-colors hover:border-accent/40"
         >
-          {copied ? <Check size={13} className="text-ok" /> : <ClipboardCopy size={13} />}
+          {copied ? <Check size={14} className="text-ok" /> : <ClipboardCopy size={14} />}
           {copied ? 'Copied' : 'Copy report'}
         </button>
       </div>
 
-      <div className="mt-6">
-        {tab === 'speed' && (
-          <SpeedPanel
-            history={speedHistory.items}
-            onResult={speedHistory.add}
-            onClear={speedHistory.clear}
-          />
-        )}
+      <nav className="mt-5 flex gap-1 overflow-x-auto rounded-xl border border-line bg-panel p-1">
+        {TABS.map((item) => {
+          const active = tab === item.id
+          return (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => setTab(item.id)}
+              aria-current={active ? 'page' : undefined}
+              className={`flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-lg px-3 py-2 text-xs transition-colors ${
+                active
+                  ? 'bg-accent-soft font-medium text-accent-strong'
+                  : 'text-muted hover:bg-panel-2 hover:text-fg'
+              }`}
+            >
+              {item.icon}
+              {item.label}
+            </button>
+          )
+        })}
+      </nav>
 
+      <div className="mt-4">
         {tab === 'overview' && (
           <OverviewPanel
             profile={profile}
@@ -128,8 +119,23 @@ export function Dashboard(): React.JSX.Element {
           />
         )}
 
+        {tab === 'speed' && (
+          <SpeedPanel
+            history={speedHistory.items}
+            onResult={speedHistory.add}
+            onClear={speedHistory.clear}
+          />
+        )}
+
         {tab === 'diagnostics' && <DiagnosticsPanel onLatency={setLatency} />}
       </div>
+
+      {latency && (
+        <p className="mt-4 flex items-center gap-2 text-[11px] text-muted">
+          <Timer size={12} />
+          Last latency check: {latency.avgMs} ms average, {latency.jitterMs} ms jitter
+        </p>
+      )}
     </div>
   )
 }
