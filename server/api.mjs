@@ -196,6 +196,8 @@ function whoami(req) {
     latitude: null,
     longitude: null,
     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone ?? null,
+    isp: null,
+    asn: null,
     userAgent: req.headers['user-agent'] ?? null,
     source: 'local'
   }

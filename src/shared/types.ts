@@ -255,6 +255,8 @@ export interface WhoAmI {
   latitude: number | null
   longitude: number | null
   timezone: string | null
+  isp: string | null
+  asn: string | null
   userAgent: string | null
   source: string
 }

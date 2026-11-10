@@ -52,6 +52,8 @@ globalThis.fetch = async (input) => {
         latitude: 6.45,
         longitude: 3.39,
         timezone: 'Africa/Lagos',
+        isp: 'AS29465 MTN Nigeria',
+        asn: 'AS29465',
         userAgent: 'test',
         source: 'vercel'
       }),
@@ -82,6 +84,8 @@ const checks = [
   ['Copy report', 'report action'],
   ['203.0.113.42', 'IP from whoami'],
   ['Lagos', 'location from whoami'],
+  ['Network path', 'network path section'],
+  ['MTN Nigeria', 'operator from lookup'],
   ['connection quality', 'quality score']
 ]
 
@@ -95,6 +99,38 @@ for (const [needle, label] of checks) {
 if (text.includes('Firewall')) {
   failures += 1
   console.log('FAIL local-only modules leaked into hosted build')
+}
+
+const tabButton = (label) =>
+  [...document.querySelectorAll('button')].find((button) => button.textContent?.trim() === label)
+
+tabButton('Speed')?.click()
+await new Promise((resolve) => setTimeout(resolve, 150))
+const speedText = document.body.textContent ?? ''
+for (const [needle, label] of [
+  ['Download', 'speed tab download metric'],
+  ['Go', 'speed tab start button'],
+  ['Recent runs', 'speed history section']
+]) {
+  const ok = speedText.includes(needle)
+  if (!ok) failures += 1
+  console.log(`${ok ? 'ok  ' : 'FAIL'} ${label}`)
+}
+const gaugePresent = document.querySelectorAll('svg path').length >= 2
+if (!gaugePresent) failures += 1
+console.log(`${gaugePresent ? 'ok  ' : 'FAIL'} gauge svg rendered`)
+
+tabButton('Diagnostics')?.click()
+await new Promise((resolve) => setTimeout(resolve, 150))
+const diagnosticsText = document.body.textContent ?? ''
+for (const [needle, label] of [
+  ['Latency & jitter', 'diagnostics latency card'],
+  ['Reachability', 'diagnostics reachability card'],
+  ['Capabilities', 'diagnostics capabilities card']
+]) {
+  const ok = diagnosticsText.includes(needle)
+  if (!ok) failures += 1
+  console.log(`${ok ? 'ok  ' : 'FAIL'} ${label}`)
 }
 
 if (errors.length > 0) {

@@ -274,56 +274,181 @@ export async function collectLocalAddresses(timeoutMs = 1500): Promise<string[]>
   })
 }
 
-export async function runClientSpeedTest(
-  onPhase?: (phase: 'ping' | 'download' | 'upload') => void
-): Promise<ClientSpeedResult> {
-  onPhase?.('ping')
-  let pingMs: number | null = null
-  try {
-    const times: number[] = []
-    for (let index = 0; index < 3; index += 1) {
-      times.push(await timedFetch(`/api/whoami?probe=ping-${index}`))
-    }
-    pingMs = Number((times.reduce((sum, value) => sum + value, 0) / times.length).toFixed(1))
-  } catch {
-    pingMs = null
-  }
+export interface LiveUpdate {
+  phase: 'ping' | 'download' | 'upload' | 'done'
+  mbps: number
+  pingMs: number | null
+  jitterMs: number | null
+  downloadMbps: number | null
+  uploadMbps: number | null
+}
 
-  onPhase?.('download')
-  let downloadMbps: number | null = null
+const DOWNLOAD_URL = 'https://speed.cloudflare.com/__down?bytes=100000000'
+const UPLOAD_URL = 'https://speed.cloudflare.com/__up'
+const PHASE_MS = 9000
+
+async function measurePingLive(onPing: (pingMs: number, jitterMs: number) => void): Promise<{
+  pingMs: number
+  jitterMs: number
+}> {
+  const samples: number[] = []
+  for (let index = 0; index < 6; index += 1) {
+    try {
+      samples.push(await timedFetch(`/api/whoami?probe=ping-${index}`))
+      const avg = samples.reduce((sum, value) => sum + value, 0) / samples.length
+      let jitter = 0
+      for (let i = 1; i < samples.length; i += 1) jitter += Math.abs(samples[i] - samples[i - 1])
+      onPing(Number(avg.toFixed(1)), Number((jitter / Math.max(1, samples.length - 1)).toFixed(1)))
+    } catch {
+      // skip failed probe
+    }
+  }
+  if (samples.length === 0) return { pingMs: 0, jitterMs: 0 }
+
+  const avg = samples.reduce((sum, value) => sum + value, 0) / samples.length
+  let jitter = 0
+  for (let index = 1; index < samples.length; index += 1) {
+    jitter += Math.abs(samples[index] - samples[index - 1])
+  }
+  return {
+    pingMs: Number(avg.toFixed(1)),
+    jitterMs: Number((jitter / Math.max(1, samples.length - 1)).toFixed(1))
+  }
+}
+
+async function measureDownloadLive(onRate: (mbps: number) => void): Promise<number> {
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), PHASE_MS)
+  let bytes = 0
+  const started = performance.now()
+  let windowBytes = 0
+  let windowStart = started
+  let lastEmit = started
+
   try {
-    const started = performance.now()
-    const response = await fetch('https://speed.cloudflare.com/__down?bytes=25000000', {
-      cache: 'no-store'
-    })
-    if (response.ok) {
-      const buffer = await response.arrayBuffer()
-      const seconds = (performance.now() - started) / 1000
-      if (seconds > 0 && buffer.byteLength > 0) {
-        downloadMbps = Number(((buffer.byteLength * 8) / seconds / 1e6).toFixed(2))
+    const response = await fetch(DOWNLOAD_URL, { signal: controller.signal, cache: 'no-store' })
+    if (!response.ok || !response.body) throw new Error(`download ${response.status}`)
+    const reader = response.body.getReader()
+    for (;;) {
+      const { done, value } = await reader.read()
+      if (done) break
+      if (value) {
+        bytes += value.byteLength
+        windowBytes += value.byteLength
+      }
+      const now = performance.now()
+      if (now - lastEmit >= 120) {
+        const seconds = (now - windowStart) / 1000
+        if (seconds > 0) onRate(Number(((windowBytes * 8) / seconds / 1e6).toFixed(2)))
+        windowBytes = 0
+        windowStart = now
+        lastEmit = now
       }
     }
-  } catch {
-    downloadMbps = null
+  } catch (error) {
+    if (!(error instanceof Error && error.name === 'AbortError')) throw error
+  } finally {
+    clearTimeout(timer)
   }
 
-  onPhase?.('upload')
-  let uploadMbps: number | null = null
-  try {
-    const payload = new Uint8Array(1_000_000)
+  const seconds = (performance.now() - started) / 1000
+  if (bytes === 0 || seconds <= 0) throw new Error('no data received')
+  return Number(((bytes * 8) / seconds / 1e6).toFixed(2))
+}
+
+function measureUploadLive(onRate: (mbps: number) => void): Promise<number> {
+  return new Promise((resolve, reject) => {
+    const payload = new Uint8Array(8_000_000)
+    const xhr = new XMLHttpRequest()
     const started = performance.now()
-    const response = await fetch('https://speed.cloudflare.com/__up', {
-      method: 'POST',
-      body: payload
-    })
-    if (response.ok) {
-      await response.arrayBuffer()
-      const seconds = (performance.now() - started) / 1000
-      if (seconds > 0) uploadMbps = Number(((payload.byteLength * 8) / seconds / 1e6).toFixed(2))
+    let lastLoaded = 0
+    let lastTime = started
+
+    xhr.upload.onprogress = (event) => {
+      const now = performance.now()
+      const seconds = (now - lastTime) / 1000
+      if (seconds >= 0.12) {
+        onRate(Number((((event.loaded - lastLoaded) * 8) / seconds / 1e6).toFixed(2)))
+        lastLoaded = event.loaded
+        lastTime = now
+      }
     }
-  } catch {
-    uploadMbps = null
+    xhr.onload = () => {
+      const seconds = (performance.now() - started) / 1000
+      if (xhr.status >= 200 && xhr.status < 300 && seconds > 0) {
+        resolve(Number(((payload.byteLength * 8) / seconds / 1e6).toFixed(2)))
+      } else {
+        reject(new Error(`upload ${xhr.status}`))
+      }
+    }
+    xhr.onerror = () => reject(new Error('upload failed'))
+    xhr.ontimeout = () => reject(new Error('upload timed out'))
+    xhr.timeout = PHASE_MS + 3000
+    xhr.open('POST', UPLOAD_URL)
+    xhr.send(payload)
+  })
+}
+
+/** Speedtest-style run: reports live values, returns the settled result. */
+export async function runSpeedTestLive(onUpdate: (update: LiveUpdate) => void): Promise<ClientSpeedResult> {
+  onUpdate({ phase: 'ping', mbps: 0, pingMs: null, jitterMs: null, downloadMbps: null, uploadMbps: null })
+  const ping = await measurePingLive((pingMs, jitterMs) => {
+    onUpdate({ phase: 'ping', mbps: 0, pingMs, jitterMs, downloadMbps: null, uploadMbps: null })
+  })
+
+  onUpdate({
+    phase: 'download',
+    mbps: 0,
+    pingMs: ping.pingMs,
+    jitterMs: ping.jitterMs,
+    downloadMbps: null,
+    uploadMbps: null
+  })
+  const downloadMbps = await measureDownloadLive((mbps) => {
+    onUpdate({
+      phase: 'download',
+      mbps,
+      pingMs: ping.pingMs,
+      jitterMs: ping.jitterMs,
+      downloadMbps: null,
+      uploadMbps: null
+    })
+  })
+
+  onUpdate({
+    phase: 'upload',
+    mbps: 0,
+    pingMs: ping.pingMs,
+    jitterMs: ping.jitterMs,
+    downloadMbps,
+    uploadMbps: null
+  })
+  const uploadMbps = await measureUploadLive((mbps) => {
+    onUpdate({
+      phase: 'upload',
+      mbps,
+      pingMs: ping.pingMs,
+      jitterMs: ping.jitterMs,
+      downloadMbps,
+      uploadMbps: null
+    })
+  })
+
+  const result: ClientSpeedResult = {
+    pingMs: ping.pingMs,
+    downloadMbps,
+    uploadMbps,
+    at: new Date().toISOString()
   }
 
-  return { pingMs, downloadMbps, uploadMbps, at: new Date().toISOString() }
+  onUpdate({
+    phase: 'done',
+    mbps: uploadMbps,
+    pingMs: ping.pingMs,
+    jitterMs: ping.jitterMs,
+    downloadMbps,
+    uploadMbps
+  })
+
+  return result
 }

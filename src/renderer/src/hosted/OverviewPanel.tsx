@@ -3,6 +3,7 @@ import {
   Globe,
   MapPin,
   Monitor,
+  RadioTower,
   Signal,
   Smartphone,
   Timer,
@@ -60,6 +61,8 @@ export function OverviewPanel({
   })
 
   const location = [whoami?.city, whoami?.region, whoami?.country].filter(Boolean).join(', ')
+  const operator = whoami?.isp ? whoami.isp.replace(/^AS\d+\s*/, '') : null
+  const bars = Math.max(1, Math.min(5, Math.round(score.score / 20)))
 
   return (
     <div className="space-y-4">
@@ -169,6 +172,59 @@ export function OverviewPanel({
           hint="preference reported by browser"
         />
       </div>
+
+      <section className="rounded-2xl border border-line bg-panel p-5">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2">
+              <RadioTower size={15} className="text-muted" />
+              <h3 className="text-sm font-semibold">Network path</h3>
+            </div>
+            <p className="mt-0.5 text-[11px] text-muted">
+              The operator and route your traffic takes to the internet.
+            </p>
+
+            <div className="mt-4 grid gap-4 sm:grid-cols-3">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.14em] text-muted">Operator</p>
+                <p className="mt-1 truncate text-sm font-medium">{operator ?? '—'}</p>
+                <p className="text-[10px] text-muted">{whoami?.asn ?? 'ASN unavailable'}</p>
+              </div>
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.14em] text-muted">Network type</p>
+                <p className="mt-1 text-sm font-medium">
+                  {hints?.effectiveType ? hints.effectiveType.toUpperCase() : '—'}
+                </p>
+                <p className="text-[10px] text-muted">reported by the browser</p>
+              </div>
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.14em] text-muted">Location</p>
+                <p className="mt-1 truncate text-sm font-medium">{location || '—'}</p>
+                <p className="text-[10px] text-muted">
+                  {whoami?.latitude != null && whoami?.longitude != null
+                    ? `${whoami.latitude.toFixed(2)}, ${whoami.longitude.toFixed(2)}`
+                    : 'geo coordinates unavailable'}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-xl border border-line p-4">
+            <p className="text-[10px] uppercase tracking-[0.14em] text-muted">Estimated signal</p>
+            <div className="mt-2 flex items-end gap-1.5" aria-hidden="true">
+              {[1, 2, 3, 4, 5].map((level) => (
+                <span
+                  key={level}
+                  className={`w-2 rounded-sm ${level <= bars ? 'bg-gradient-to-t from-accent to-cyan-400' : 'bg-line'}`}
+                  style={{ height: `${8 + level * 6}px` }}
+                />
+              ))}
+            </div>
+            <p className="mt-2 text-xs font-medium">{score.label}</p>
+            <p className="text-[10px] text-muted">derived from live measurements</p>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }

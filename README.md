@@ -15,8 +15,9 @@ editions from one codebase:
 **Browser edition** — for any visitor, on any device:
 
 - Device profile: browser, operating system, display, pixel ratio, cores, memory, language, timezone
-- Connection identity: public IP, city, region, country, timezone, network type and RTT estimates
-- Speed test: download, upload and latency measured in the browser, with local history
+- Connection identity: public IP, city, region, country, timezone, network operator and ASN
+- Speed test with an animated gauge, live sampling during download and upload, and local history
+- Network path view: operator, browser-reported network type and estimated link quality
 - Latency and jitter analysis with per-sample distribution
 - Reachability checks across major services
 - WebRTC exposure review: which local addresses a browser still reveals
