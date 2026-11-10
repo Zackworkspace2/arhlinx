@@ -75,62 +75,42 @@ window.console.error = (...args) => errors.push(args.map(String).join(' '))
 await import(pathToFileURL(`${BUNDLE_DIR}/assets/${bundle}`).href)
 await new Promise((resolve) => setTimeout(resolve, 200))
 
-const text = document.body.textContent ?? ''
-const checks = [
-  ['Device & connection', 'dashboard heading'],
-  ['Overview', 'overview tab'],
-  ['Speed', 'speed tab'],
-  ['Diagnostics', 'diagnostics tab'],
-  ['Copy report', 'report action'],
-  ['203.0.113.42', 'IP from whoami'],
-  ['Lagos', 'location from whoami'],
-  ['Network path', 'network path section'],
-  ['MTN Nigeria', 'operator from lookup'],
-  ['connection quality', 'quality score']
-]
-
 let failures = 0
-for (const [needle, label] of checks) {
-  const ok = text.includes(needle)
-  if (!ok) failures += 1
-  console.log(`${ok ? 'ok  ' : 'FAIL'} ${label}`)
+
+function check(condition, label) {
+  if (!condition) failures += 1
+  console.log(`${condition ? 'ok  ' : 'FAIL'} ${label}`)
 }
 
-if (text.includes('Firewall')) {
-  failures += 1
-  console.log('FAIL local-only modules leaked into hosted build')
-}
+const text = () => document.body.textContent ?? ''
 
-const tabButton = (label) =>
+check(text().includes('How fast is your connection?'), 'speed hero heading')
+check(text().includes('Speed test'), 'speed tab label')
+check(text().includes('Go'), 'go button')
+check(text().includes('Download'), 'download metric')
+check(text().includes('Recent runs'), 'history section')
+check(document.querySelectorAll('svg path').length >= 2, 'gauge svg rendered')
+
+const tab = (label) =>
   [...document.querySelectorAll('button')].find((button) => button.textContent?.trim() === label)
 
-tabButton('Speed')?.click()
+tab('Overview')?.click()
 await new Promise((resolve) => setTimeout(resolve, 150))
-const speedText = document.body.textContent ?? ''
-for (const [needle, label] of [
-  ['Download', 'speed tab download metric'],
-  ['Go', 'speed tab start button'],
-  ['Recent runs', 'speed history section']
-]) {
-  const ok = speedText.includes(needle)
-  if (!ok) failures += 1
-  console.log(`${ok ? 'ok  ' : 'FAIL'} ${label}`)
-}
-const gaugePresent = document.querySelectorAll('svg path').length >= 2
-if (!gaugePresent) failures += 1
-console.log(`${gaugePresent ? 'ok  ' : 'FAIL'} gauge svg rendered`)
+check(text().includes('Network path'), 'network path section')
+check(text().includes('MTN Nigeria'), 'operator from lookup')
+check(text().includes('203.0.113.42'), 'public IP')
+check(text().includes('Lagos'), 'location')
+check(text().includes('Estimated signal'), 'signal estimate')
 
-tabButton('Diagnostics')?.click()
+tab('Diagnostics')?.click()
 await new Promise((resolve) => setTimeout(resolve, 150))
-const diagnosticsText = document.body.textContent ?? ''
-for (const [needle, label] of [
-  ['Latency & jitter', 'diagnostics latency card'],
-  ['Reachability', 'diagnostics reachability card'],
-  ['Capabilities', 'diagnostics capabilities card']
-]) {
-  const ok = diagnosticsText.includes(needle)
-  if (!ok) failures += 1
-  console.log(`${ok ? 'ok  ' : 'FAIL'} ${label}`)
+check(text().includes('Latency & jitter'), 'latency card')
+check(text().includes('Reachability'), 'reachability card')
+check(text().includes('Capabilities'), 'capabilities card')
+
+if (text().includes('Firewall')) {
+  failures += 1
+  console.log('FAIL local-only modules leaked into hosted build')
 }
 
 if (errors.length > 0) {
