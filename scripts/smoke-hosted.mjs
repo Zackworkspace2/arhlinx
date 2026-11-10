@@ -109,16 +109,16 @@ await new Promise((resolve) => setTimeout(resolve, 150))
 const speedText = document.body.textContent ?? ''
 for (const [needle, label] of [
   ['Download', 'speed tab download metric'],
-  ['Go', 'speed tab start button'],
+  ['Start test', 'speed start button'],
   ['Recent runs', 'speed history section']
 ]) {
   const ok = speedText.includes(needle)
   if (!ok) failures += 1
   console.log(`${ok ? 'ok  ' : 'FAIL'} ${label}`)
 }
-const gaugePresent = document.querySelectorAll('svg path').length >= 2
-if (!gaugePresent) failures += 1
-console.log(`${gaugePresent ? 'ok  ' : 'FAIL'} gauge svg rendered`)
+const readout = document.querySelector('[data-testid="speed-readout"]')
+if (!readout) failures += 1
+console.log(`${readout ? 'ok  ' : 'FAIL'} speed readout rendered`)
 
 tabButton('Diagnostics')?.click()
 await new Promise((resolve) => setTimeout(resolve, 150))
