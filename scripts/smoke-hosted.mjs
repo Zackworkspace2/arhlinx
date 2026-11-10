@@ -75,12 +75,14 @@ await new Promise((resolve) => setTimeout(resolve, 200))
 
 const text = document.body.textContent ?? ''
 const checks = [
-  ['This device', 'device heading'],
-  ['Public IP', 'public IP card'],
-  ['Speed test', 'speed test section'],
-  ['Run test', 'speed test button'],
+  ['Device & connection', 'dashboard heading'],
+  ['Overview', 'overview tab'],
+  ['Speed', 'speed tab'],
+  ['Diagnostics', 'diagnostics tab'],
+  ['Copy report', 'report action'],
   ['203.0.113.42', 'IP from whoami'],
-  ['Lagos', 'location from whoami']
+  ['Lagos', 'location from whoami'],
+  ['connection quality', 'quality score']
 ]
 
 let failures = 0

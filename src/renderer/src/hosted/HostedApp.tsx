@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Moon, Sun } from 'lucide-react'
-import { DeviceCheckPage } from './DeviceCheckPage'
+import { Dashboard } from './Dashboard'
 import { applyTheme, readTheme, type UiTheme } from '../lib/theme'
 import { APP_VERSION } from '../lib/version'
 
@@ -23,7 +23,7 @@ export default function HostedApp(): React.JSX.Element {
         />
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold leading-tight">ArhLinx</p>
-          <p className="truncate text-[11px] leading-tight text-muted">Device check</p>
+          <p className="truncate text-[11px] leading-tight text-muted">Complete Network Control</p>
         </div>
         <button
           type="button"
@@ -37,12 +37,12 @@ export default function HostedApp(): React.JSX.Element {
       </header>
 
       <main className="flex-1 overflow-y-auto">
-        <DeviceCheckPage />
+        <Dashboard />
       </main>
 
-      <footer className="flex shrink-0 items-center justify-between border-t border-line px-5 py-3 text-[11px] text-muted">
+      <footer className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-t border-line px-5 py-3 text-[11px] text-muted">
         <span>ArhLinx v{APP_VERSION}</span>
-        <span>no cookies · no tracking · data stays in your browser</span>
+        <span>Private by design — readings stay in your browser</span>
       </footer>
     </div>
   )
