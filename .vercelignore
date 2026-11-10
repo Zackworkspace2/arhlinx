@@ -1,0 +1,12 @@
+node_modules/
+dist/
+dist-hosted/
+out/
+release/
+data/
+.tmp/
+.npm-cache/
+.electron-cache/
+*.log
+*.png
+rules.md

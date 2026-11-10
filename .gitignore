@@ -10,4 +10,12 @@ data/
 *.log
 .DS_Store
 
+.env
+.env.local
+.env.*.local
+
+# internal notes and stale screenshots
+rules.md
+ui-*.png
+
 .vercel
